@@ -142,3 +142,4 @@ void PinToggle::updateHighPeriod(unsigned long newPeriod)
 
 		}
 }
+ 
