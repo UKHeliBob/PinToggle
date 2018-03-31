@@ -34,7 +34,7 @@ void PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned
   _periods[1] = highPeriod;
   if (_startState == LOW)
   {
-    _periodIndex = 0;
+    _periodIndex = 0; 
   }
   else
   {
