@@ -11,12 +11,12 @@ PinToggle::PinToggle(byte pin)  //constructor
 	_pinNum = pin;
 }
 
-PinToggle::begin()
+void PinToggle::begin()
 {
 	pinMode(_pinNum, OUTPUT);
 }
 
-PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod, unsigned int toggleCount = 0)  //set initial state, periods and count
+void PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod, unsigned int toggleCount = 0)  //set initial state, periods and count
 {
 	_originalStartState = startState;
 	_originalToggleCount = toggleCount;
@@ -47,7 +47,7 @@ PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned long
   _started = true;
 }
 
-PinToggle::restartToggling()	//restart toggling with original parameters
+void PinToggle::restartToggling()	//restart toggling with original parameters
 {
 	if (_started)
 	{
@@ -55,7 +55,7 @@ PinToggle::restartToggling()	//restart toggling with original parameters
 	}
 }
 	
-PinToggle::update()  //check whether period has ended and change state if true
+void PinToggle::update()  //check whether period has ended and change state if true
 {
   if (!_toggling)   //no need to update if not currently toggling
   {
@@ -80,30 +80,30 @@ PinToggle::update()  //check whether period has ended and change state if true
   }
 }
 
-PinToggle::getToggleCount()
+unsigned int PinToggle::getToggleCount()
 {
 	return _toggleCount;
 }
 
-PinToggle::stopToggling(byte state)
+void PinToggle::stopToggling(byte state)
 {
 	setOutputState(state);
 }
 
-PinToggle::setOutputState(byte state)
+void PinToggle::setOutputState(byte state)
 {
   _currentState = state;
   _writeState();
   _toggling = false;
 }
 
-PinToggle::getOutputState()
+byte PinToggle::getOutputState()
 {
 	return _currentState;
   }
 
 
-PinToggle::resumeToggling()
+void PinToggle::resumeToggling()
 {
   if (_started)
   {
@@ -111,12 +111,12 @@ PinToggle::resumeToggling()
   }
 }
 
-PinToggle::getTogglingState()
+boolean PinToggle::getTogglingState()
 {
   return _toggling;
 }
 
-PinToggle::_writeState()
+void PinToggle::_writeState()
 {
 	digitalWrite(_pinNum, _currentState);
 }
