@@ -38,5 +38,9 @@ void loop()
   {
     output2.restartToggling();
     output3.setOutputState(!output3.getOutputState());
+    output0.updateLowPeriod(random(50, 5000));
+    output0.updateHighPeriod(random(50, 5000));
+    output1.updateLowPeriod(random(50, 5000));
+    output1.updateHighPeriod(random(50, 5000));
   }
 }

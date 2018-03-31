@@ -24,20 +24,22 @@ class PinToggle
     boolean _toggling = false;
     byte _currentState;
 	boolean _counting;
-	_writeState();
+	void _writeState();
 
   public:
     PinToggle(byte pin);  //constructor - define the pin to be used
-	begin();	//set pinMode
-    startToggling(byte state, unsigned long lowPeriod, unsigned long highPeriod, unsigned int toggleCount = 0);  //set initial state and periods
-    restartToggling();	//restart toggling with original parameters
-    update();  //check whether period has ended and change state if true
-    setOutputState(byte state);	//set the output state for the pin and stop toggling
-	getOutputState();	//get the current state of the output
-	stopToggling(byte state);	//stop toggling and go into the given state
-    resumeToggling();	//resume toggling
-    getTogglingState();	//get toggling state
-	getToggleCount();	//get the number of toggles remaining
+	void begin();	//set pinMode
+    void startToggling(byte state, unsigned long lowPeriod, unsigned long highPeriod, unsigned int toggleCount = 0);  //set initial state and periods
+    void restartToggling();	//restart toggling with original parameters
+    void update();  //check whether period has ended and change state if true
+    void setOutputState(byte state);	//set the output state for the pin and stop toggling
+	byte getOutputState();	//get the current state of the output
+	void stopToggling(byte state);	//stop toggling and go into the given state
+    void resumeToggling();	//resume toggling
+    boolean getTogglingState();	//get toggling state
+	unsigned int getToggleCount();	//get the number of toggles remaining
+	void updateLowPeriod(unsigned long newPeriod);
+	void updateHighPeriod(unsigned long newPeriod);	
 };
 
 #endif
