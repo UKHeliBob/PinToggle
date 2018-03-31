@@ -37,7 +37,7 @@ class PinToggle
 	void stopToggling(byte state);	//stop toggling and go into the given state
     void resumeToggling();	//resume toggling
     boolean getTogglingState();	//get toggling state
-	unsigned int getToggleCount();	//get the number of toggles remaining
+	unsigned int getToggleCount();	//get the number of toggles remaining 
 	void updateLowPeriod(unsigned long newPeriod);
 	void updateHighPeriod(unsigned long newPeriod);	
 };
