@@ -89,6 +89,12 @@ Get toggling state (true or false)
 getToggleCount();
 Get the number of toggles remaining
 
+changeLowPeriod(unsigned long newPeriod);
+Change the LOW period of a currently toggling pin
+
+changeHighPeriod(unsigned long newPeriod);
+Change the HIGH period of a currently toggling pin
+
 
 
 
