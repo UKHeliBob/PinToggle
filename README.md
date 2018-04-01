@@ -89,6 +89,16 @@ Get toggling state (true or false)
 getToggleCount();
 Get the number of toggles remaining
 
+setLowPeriod(unsigned long newPeriod);
+Changes the LOW period of a toggling object
+Parameters		newPeriod	the new value for the LOW period (milliseconds)
+
+setHighPeriod(unsigned long newPeriod);
+Changes the HIGH period of a toggling object
+Parameters		newPeriod	the new value for the HIGH period (milliseconds)
+
+
+
 
 
 
