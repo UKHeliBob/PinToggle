@@ -18,8 +18,8 @@ void PinToggle::begin()
 
 void PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod, unsigned int toggleCount = 0)  //set initial state, periods and count
 {
-   _originalStartState = startState;
-   _originalToggleCount = toggleCount;
+	_originalStartState = startState;
+	_originalToggleCount = toggleCount;
   if (toggleCount == 0)
   {
 	  _counting = false;
@@ -49,10 +49,10 @@ void PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned
 
 void PinToggle::restartToggling()	//restart toggling with original parameters
 {
-   if (_started)
-   {
-      startToggling(_originalStartState, _periods[0], _periods[1], _originalToggleCount);
-   }
+	if (_started)
+	{
+	startToggling(_originalStartState, _periods[0], _periods[1], _originalToggleCount);
+	}
 }
 	
 void PinToggle::update()  //check whether period has ended and change state if true
@@ -64,7 +64,7 @@ void PinToggle::update()  //check whether period has ended and change state if t
   _currentTime = millis();
   if (_currentTime - _startTime >= _periods[_periodIndex])
   {
-     _currentState = !_currentState;
+	  _currentState = !_currentState;
     _writeState();
     _periodIndex++;
     _periodIndex %= 2;
@@ -74,7 +74,7 @@ void PinToggle::update()  //check whether period has ended and change state if t
 	  _toggleCount--;
 	  if (_toggleCount == 0)
 	  {
-             _toggling = false;
+		  _toggling = false;
 	  }
 	}
   }
@@ -119,4 +119,26 @@ boolean PinToggle::getTogglingState()
 void PinToggle::_writeState()
 {
 	digitalWrite(_pinNum, _currentState);
+}
+
+void PinToggle::updateLowPeriod(unsigned long newPeriod)
+{
+	if (_toggling)
+	{
+		_periods[0] = newPeriod;
+		Serial.print("\nNew LOW period : ");
+		Serial.println(_periods[0]);
+
+	}
+}
+
+void PinToggle::updateHighPeriod(unsigned long newPeriod)
+{
+	if (_toggling)
+	{
+		_periods[1] = newPeriod;
+		Serial.print("\nNew HIGH period : ");
+		Serial.println(_periods[1]);
+
+		}
 }
