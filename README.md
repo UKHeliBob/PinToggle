@@ -91,10 +91,11 @@ Get the number of toggles remaining
 
 changeLowPeriod(unsigned long newPeriod);
 Change the LOW period of a currently toggling pin
+Paraneters		newPeriod	the new LOW period to be applied at the next call to update()
 
 changeHighPeriod(unsigned long newPeriod);
 Change the HIGH period of a currently toggling pin
-
+Paraneters		newPeriod	the new HIGH period to be applied at the next call to update()
 
 
 
