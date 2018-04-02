@@ -25,13 +25,16 @@ class PinToggle
     byte _currentState;
 	boolean _counting;
 	void _writeState();
-
+	
+	
   public:
+  	using callbackFunc = void (*)(int);   //create function pointer type
+    callbackFunc cb1;                       //an instance of the function pointer type
     PinToggle(byte pin);  //constructor - define the pin to be used
 	void begin();	//set pinMode
     void startToggling(byte state, unsigned long lowPeriod, unsigned long highPeriod, unsigned int toggleCount = 0);  //set initial state and periods
     void restartToggling();	//restart toggling with original parameters
-    void update();  //check whether period has ended and change state if true
+	void update(callbackFunc func = nullptr);  //check whether period has ended and change state if true
     void setOutputState(byte state);	//set the output state for the pin and stop toggling
 	byte getOutputState();	//get the current state of the output
 	void stopToggling(byte state);	//stop toggling and go into the given state
@@ -40,6 +43,7 @@ class PinToggle
 	unsigned int getToggleCount();	//get the number of toggles remaining
 	void updateLowPeriod(unsigned long newPeriod);
 	void updateHighPeriod(unsigned long newPeriod);	
-};
+
+	};
 
 #endif
