@@ -66,8 +66,10 @@ Parameters :	state 		the initial state of the pin (HIGH or LOW)
 restartToggling();
 Restart toggling the pin state with the original parameters
 
-update();
+update(funcName);
 Update the state of the pin if the current period has ended.  Must be called frequently
+Parameters	:	funcName	name of the function to be called when the update occurs
+					the callback function returns the toggle count if it changes during the update
 
 setOutputState(byte state);
 Set the output state for the pin and stop toggling
