@@ -25,22 +25,21 @@ void loop()
 {
   output0.update();
   output1.update();
-  output2.update();
+  output2.update(printCount);	//use callback
   output3.update();
-  previousToggleCount = currentToggleCount;
-  currentToggleCount = output2.getToggleCount();
-  if (currentToggleCount != previousToggleCount)
-  {
-    Serial.print("Toggle count : ");
-    Serial.println(output2.getToggleCount());
-  }
-  if (currentToggleCount == 0)
+}
+
+void printCount(int count)	//callback function
+{
+  Serial.println(count);
+  if (count == 0)
   {
     output2.restartToggling();
     output3.setOutputState(!output3.getOutputState());
-    output0.updateLowPeriod(random(50, 5000));
-    output0.updateHighPeriod(random(50, 5000));
-    output1.updateLowPeriod(random(50, 5000));
-    output1.updateHighPeriod(random(50, 5000));
+    output0.updateLowPeriod(random(50, 1000));
+    output0.updateHighPeriod(random(50, 1000));
+    output1.updateLowPeriod(random(50, 1000));
+    output1.updateHighPeriod(random(50, 1000));
   }
 }
+
