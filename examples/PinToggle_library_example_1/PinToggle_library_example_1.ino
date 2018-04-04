@@ -5,9 +5,6 @@ PinToggle output1(12);
 PinToggle output2(11);
 PinToggle output3(10);
 
-int previousToggleCount;
-int currentToggleCount;
-
 void setup()
 {
   Serial.begin(115200);
@@ -15,8 +12,8 @@ void setup()
   output1.begin();
   output2.begin();
   output3.begin();
-  output0.startToggling(HIGH, 500, 100);
-  output1.startToggling(HIGH, 500, 111);
+  output0.waitBeforeToggling(LOW, 500, 100, 10000);	//10 second delay before toggling starts
+  output1.startToggling(HIGH, 500, 500);
   output2.startToggling(HIGH, 1000, 1000, 10);
   output3.setOutputState(LOW);
 }
@@ -42,4 +39,3 @@ void printCount(int count)	//callback function
     output1.updateHighPeriod(random(50, 1000));
   }
 }
-
