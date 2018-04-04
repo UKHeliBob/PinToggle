@@ -60,8 +60,8 @@ Start toggling the pin state
 Parameters :			state 		the initial state of the pin (HIGH or LOW)
 				lowPeriod 	the period in milliseconds that the pin should be LOW
 				highPeriod 	the period in milliseconds that the pin should be HIGH
-				toggleCount	the number of times the pin should toggle before stopping.  
-							Set to 0 (the default) to disable the count and toggle continuously
+				toggleCount (optional)	the number of times the pin should toggle before stopping.  
+							if not provided the pin will toggle continuously
 
 waitBeforeToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod, unsigned long waitPeriod);
 Start toggling after a wait period
