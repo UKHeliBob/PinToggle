@@ -54,6 +54,7 @@ void PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned
 void PinToggle::waitBeforeToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod, unsigned long waitPeriod)
 {
   _currentState = startState;
+  _originalStartState = startState;
   _periods[0] = lowPeriod;
   _periods[1] = highPeriod;
     if (_startState == LOW)
