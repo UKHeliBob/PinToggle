@@ -27,13 +27,14 @@ class PinToggle
 	unsigned long _waitStartTime;
 	unsigned long _waitPeriod;
 	boolean _waiting;
+	byte _ID;
 	void _writeState();
 	
   public:
     using callbackFunc = void (*)(int);   //create function pointer type
     callbackFunc cb1;                       //an instance of the function pointer type
     PinToggle(byte pin);  //constructor - define the pin to be used
-	void begin();	//set pinMode
+	byte begin();	//set pinMode and return ID
 	void PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod);  //base version
     void startToggling(byte state, unsigned long lowPeriod, unsigned long highPeriod, unsigned int toggleCount);  //set initial state and periods
 	void waitBeforeToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod, unsigned long waitPeriod);

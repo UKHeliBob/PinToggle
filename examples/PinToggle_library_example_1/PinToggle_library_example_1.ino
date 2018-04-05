@@ -8,14 +8,14 @@ PinToggle output3(10);
 void setup()
 {
   Serial.begin(115200);
-  output0.begin();
-  output1.begin();
-  output2.begin();
-  output3.begin();
-  output0.waitBeforeToggling(LOW, 500, 100, 10000);	//10 second delay before toggling starts
-  output1.startToggling(HIGH, 500, 500);
+  Serial.println(output0.begin());
+  Serial.println(output1.begin());
+  Serial.println(output2.begin());
+  Serial.println(output3.begin());
+  output0.waitBeforeToggling(LOW, 500, 500, 10000);	//10 second delay before toggling starts
+  output1.waitBeforeToggling(HIGH, 500, 500, 10000);
   output2.startToggling(HIGH, 1000, 1000, 10);
-  output3.setOutputState(LOW);
+  output3.setOutputState(HIGH);
 }
 
 void loop()

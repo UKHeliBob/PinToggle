@@ -9,13 +9,13 @@
 PinToggle::PinToggle(byte pin)  //constructor
 {
   _pinNum = pin;
-  
-
  }
 
-void PinToggle::begin()
+byte PinToggle::begin()
 {
+  static byte _ID = 0;
   pinMode(_pinNum, OUTPUT);
+ return _ID++;
 }
 
 //overloaded function to handle optional parameters
