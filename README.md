@@ -75,19 +75,19 @@ Restart toggling the pin state with the original parameters
 
 update(funcName);
 Update the state of the pin if the current period has ended.  Must be called frequently
-Parameters	:	funcName	name of the function to be called when the update occurs
-					the callback function returns the toggle count if it changes during the update
+Parameters	:	funcName		name of the function to be called when the update occurs
+						the callback function returns the toggle count if it changes during the update
 
 setOutputState(byte state);
 Set the output state for the pin and stop toggling
-Parameters	:	state		the state (HIGH or LOW) into which the pin should be put
+Parameters	:	state			the state (HIGH or LOW) into which the pin should be put
 
 getOutputState();	
 Get the current state of the output
 
 stopToggling(byte state);
 Stop toggling and go into the specified state
-Parameters:		state		the state into which the pin should be put (HIGH or LOW)
+Parameters:		state			the state into which the pin should be put (HIGH or LOW)
 
 resumeToggling();
 Resume toggling from where it was stopped
@@ -100,13 +100,23 @@ Get the number of toggles remaining
 
 updateLowPeriod(unsigned long newPeriod);
 Changes the LOW period of a toggling object
-Parameters		newPeriod	the new value for the LOW period (milliseconds)
+Parameters		newPeriod		the new value for the LOW period (milliseconds)
 
 updateHighPeriod(unsigned long newPeriod);
 Changes the HIGH period of a toggling object
-Parameters		newPeriod	the new value for the HIGH period (milliseconds)
+Parameters		newPeriod		the new value for the HIGH period (milliseconds)
 
-
+startBurstMode(unsigned long lowPeriod, unsigned long highPeriod, unsigned long burstOnPeriod, unsigned long burstOffPeriod, byte interBurstState);
+Starts burst mode on specified pin
+Parameters		lowPeriod		the period in milliseconds that the pin should be LOW during a burst
+			highPeriod		the period in milliseconds that the pin should be HIGH during a burst
+			burstOnPeriod		the period during which should last
+			burstOffPeriod		the period during which the burst should pause
+			interBurstState		the state in which the pin should be held whilst bursting is paused
+			
+stopBurstMode(byte stoppedBurstState);
+Stops burst mode on the specified pin
+Parameters		stoppedBurstState	the state in which the pin should be placed when bursting is stopped
 
 
 
