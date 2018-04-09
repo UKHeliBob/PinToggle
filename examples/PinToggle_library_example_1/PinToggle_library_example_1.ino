@@ -12,8 +12,8 @@ void setup()
   Serial.println(output1.begin());
   Serial.println(output2.begin());
   Serial.println(output3.begin());
-  output0.waitBeforeToggling(LOW, 500, 500, 10000);	//10 second delay before toggling starts
-  output1.waitBeforeToggling(HIGH, 500, 500, 10000);
+  output0.waitBeforeToggling(LOW, 500, 500, 5000);	//5 second delay before toggling starts
+  output1.waitBeforeToggling(HIGH, 500, 500, 5000);
   output2.startToggling(HIGH, 1000, 1000, 10);
   output3.setOutputState(HIGH);
 }

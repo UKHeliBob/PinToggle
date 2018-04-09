@@ -17,16 +17,21 @@ class PinToggle
 	unsigned int _toggleCount;
 	unsigned int _originalToggleCount;
 	boolean _started = false;
-    unsigned long _periods[2];
-    byte _periodIndex;
-    unsigned long _startTime;
+    unsigned long _togglePeriods[2];
+    unsigned long _burstPeriods[2];	
+    byte _togglePeriodIndex;
+    byte _burstPeriodIndex;
+    unsigned long _toggleStartTime;
+	unsigned long _burstStartTime;	
+	byte _interBurstState;
     unsigned long _currentTime;
-    boolean _toggling = false;
     byte _currentState;
 	boolean _counting;
 	unsigned long _waitStartTime;
 	unsigned long _waitPeriod;
-	boolean _waiting;
+	boolean _toggling = false;
+	boolean _waiting = false;
+	boolean _bursting = false;
 	byte _ID;
 	void _writeState();
 	
@@ -35,7 +40,7 @@ class PinToggle
     callbackFunc cb1;                       //an instance of the function pointer type
     PinToggle(byte pin);  //constructor - define the pin to be used
 	byte begin();	//set pinMode and return ID
-	void PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod);  //base version
+	void startToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod);  //base version
     void startToggling(byte state, unsigned long lowPeriod, unsigned long highPeriod, unsigned int toggleCount);  //set initial state and periods
 	void waitBeforeToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod, unsigned long waitPeriod);
     void restartToggling();	//restart toggling with original parameters
@@ -48,6 +53,8 @@ class PinToggle
 	unsigned int getToggleCount();	//get the number of toggles remaining
 	void updateLowPeriod(unsigned long newPeriod);
 	void updateHighPeriod(unsigned long newPeriod);	
+	void startBurstMode(unsigned long lowPeriod, unsigned long highPeriod, unsigned long burstOnPeriod, unsigned long burstOffPeriod, byte interBurstState);
+	void stopBurstMode(byte stoppedBurstState);
 	};
 
 #endif

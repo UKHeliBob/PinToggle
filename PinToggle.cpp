@@ -23,21 +23,21 @@ byte PinToggle::begin()
 //base version
 void PinToggle::startToggling(byte startState, unsigned long lowPeriod, unsigned long highPeriod)
 {
-  _periods[0] = lowPeriod;
-  _periods[1] = highPeriod;
+  _togglePeriods[0] = lowPeriod;
+  _togglePeriods[1] = highPeriod;
   if (_startState == LOW)
   {
-    _periodIndex = 0;
+    _togglePeriodIndex = 0;
   }
   else
   {
-    _periodIndex = 1;
+    _togglePeriodIndex = 1;
   }
 	_startState = startState;
 	_originalStartState = _startState;
 	_currentState = _startState;
 	_writeState();
-	_startTime = millis();
+	_toggleStartTime = millis();
 	_toggling = true;
 	_started = true;	
 }
@@ -55,15 +55,15 @@ void PinToggle::waitBeforeToggling(byte startState, unsigned long lowPeriod, uns
 {
   _currentState = startState;
   _originalStartState = startState;
-  _periods[0] = lowPeriod;
-  _periods[1] = highPeriod;
+  _togglePeriods[0] = lowPeriod;
+  _togglePeriods[1] = highPeriod;
     if (_startState == LOW)
   {
-    _periodIndex = 0;
+    _togglePeriodIndex = 0;
   }
   else
   {
-    _periodIndex = 1;
+    _togglePeriodIndex = 1;
   }
   _waiting = true;
   _waitPeriod = waitPeriod;
@@ -75,22 +75,22 @@ void PinToggle::restartToggling() //restart toggling with original parameters
 {
   if (_started)
   {
-    startToggling(_originalStartState, _periods[0], _periods[1], _originalToggleCount);
+    startToggling(_originalStartState, _togglePeriods[0], _togglePeriods[1], _originalToggleCount);
   }
 }
 
 void PinToggle::update(callbackFunc func = nullptr)  //change state if period ended.  callback optional
 {
   _currentTime = millis();
-  if (_toggling)   //no need to update if not currently toggling
+  if (_toggling)
   {
-    if (_currentTime - _startTime >= _periods[_periodIndex])
+    if (_currentTime - _toggleStartTime >= _togglePeriods[_togglePeriodIndex])
     {
       _currentState = !_currentState;
       _writeState();
-      _periodIndex++;
-      _periodIndex %= 2;
-      _startTime = _currentTime;
+      _togglePeriodIndex++;
+      _togglePeriodIndex %= 2;
+      _toggleStartTime = _currentTime;
       if (_counting)
       {
         _toggleCount--;
@@ -112,11 +112,30 @@ void PinToggle::update(callbackFunc func = nullptr)  //change state if period en
 	 if (_currentTime - _waitStartTime >= _waitPeriod)
 	 {
 		 _waiting = false;
-		 startToggling(_originalStartState, _periods[0], _periods[1]);
+		 startToggling(_originalStartState, _togglePeriods[0], _togglePeriods[1]);
 	 }
   }
   
-  
+    if (_bursting)
+  {
+    if (_currentTime - _burstStartTime >= _burstPeriods[_burstPeriodIndex])
+	{
+		_burstPeriodIndex++;
+		_burstPeriodIndex %= 2;
+		_burstStartTime = _currentTime;
+		_toggling = !_toggling;
+		
+		if (_toggling)
+		{
+			_toggleStartTime = _currentTime;
+		}
+		else
+		{
+			_currentState = _interBurstState;
+			_writeState();
+		}		
+	}
+  }
 }
 
 unsigned int PinToggle::getToggleCount()
@@ -141,7 +160,6 @@ byte PinToggle::getOutputState()
   return _currentState;
 }
 
-
 void PinToggle::resumeToggling()
 {
   if (_started)
@@ -164,7 +182,7 @@ void PinToggle::updateLowPeriod(unsigned long newPeriod)
 {
   if (_toggling)
   {
-    _periods[0] = newPeriod;
+    _togglePeriods[0] = newPeriod;
   }
 }
 
@@ -172,6 +190,32 @@ void PinToggle::updateHighPeriod(unsigned long newPeriod)
 {
   if (_toggling)
   {
-    _periods[1] = newPeriod;
+    _togglePeriods[1] = newPeriod;
   }
 }
+
+void PinToggle::startBurstMode(unsigned long lowPeriod, unsigned long highPeriod, unsigned long burstOnPeriod, unsigned long burstOffPeriod, byte interBurstState)
+{
+	_togglePeriods[0] = lowPeriod;
+	_togglePeriods[1] = highPeriod;
+	_burstPeriods[0] = burstOffPeriod;
+	_burstPeriods[1] = burstOnPeriod;
+	_interBurstState = interBurstState;
+	_bursting = true;
+	_toggling = true;
+	_currentState = LOW;
+	_burstPeriodIndex = 0;
+	_currentState = _interBurstState;
+	_writeState();
+	_toggleStartTime = millis();
+}
+
+	void PinToggle::stopBurstMode(byte stoppedBurstState)
+	{
+		_bursting = false;
+		_toggling = false;
+		_currentState = stoppedBurstState;
+		_writeState();		
+	}
+
+
